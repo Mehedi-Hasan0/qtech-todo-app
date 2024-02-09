@@ -1,10 +1,16 @@
+import AddTodo from "./components/AddTodo";
 import Navbar from "./components/Navbar";
+import TodoCounter from "./components/TodoCounter";
 
 const App = () => {
   return (
     <main className="main-container flex flex-col items-center gap-8">
-      <h2 className="text-2xl font-semibold">Qtech Todo</h2>
+      <h2 className="text-2xl md:text-3xl 2xl:text-4xl font-semibold">
+        Qtech Todo App
+      </h2>
       <Navbar />
+      <AddTodo />
+      <TodoCounter />
     </main>
   );
 };

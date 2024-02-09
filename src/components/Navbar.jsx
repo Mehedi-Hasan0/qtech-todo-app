@@ -4,12 +4,12 @@ const Navbar = () => {
   const [searchParams] = useSearchParams();
   const todosParams = searchParams.get("todos");
   return (
-    <nav className="flex flex-row items-center justify-between min-w-[300px] sm:min-w-[450px] md:min-w-full border-b border-[#ccc]">
+    <nav className="sub-container flex flex-row items-center justify-between border-b border-[#ccc]">
       <Link
         to="/"
         className={`${
           todosParams === null ? "active" : "non-active"
-        } sm:text-lg md:text-xl xl:text-2xl`}
+        } sm:text-lg md:text-xl 2xl:text-2xl`}
       >
         All
       </Link>
@@ -17,7 +17,7 @@ const Navbar = () => {
         to="/?todos=active"
         className={`${
           todosParams === "active" ? "active" : "non-active"
-        } sm:text-lg md:text-xl xl:text-2xl`}
+        } sm:text-lg md:text-xl 2xl:text-2xl`}
       >
         Active
       </Link>
@@ -25,7 +25,7 @@ const Navbar = () => {
         to="/?todos=completed"
         className={`${
           todosParams === "completed" ? "active" : "non-active"
-        } sm:text-lg md:text-xl xl:text-2xl`}
+        } sm:text-lg md:text-xl 2xl:text-2xl`}
       >
         Completed
       </Link>
