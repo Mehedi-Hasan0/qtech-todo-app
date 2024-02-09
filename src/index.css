@@ -13,6 +13,11 @@ body {
 }
 
 @layer utilities {
+  .main-container {
+    @apply min-w-[260px] sm:min-w-[320px] md:max-w-xl lg:max-w-2xl xl:max-w-screen-md 2xl:max-w-screen-lg mx-auto min-h-screen mt-8 px-10 sm:px-12 md:px-14;
+  }
+  .sub-container {
+  }
   .active {
     @apply border-b-[1.5px] border-[#68b984];
   }
