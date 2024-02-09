@@ -1,11 +1,36 @@
+import { useState } from "react";
+import { useToDos } from "../context/TodoContext";
 import Button from "./shared/Button";
 
 const AddTodo = () => {
+  // CONTEXT variables
+  const { handleAddToDo, todo } = useToDos();
+  // STATE
+  const [toDo, setToDo] = useState("");
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // saving todos to localstorage and to the context
+    handleAddToDo(toDo);
+
+    // making todo empty for new todo
+    setToDo("");
+  };
+
   return (
-    <form className="sub-container flex items-center gap-5">
+    <form
+      onSubmit={handleFormSubmit}
+      className="sub-container flex items-center gap-5"
+    >
       <input
         type="text"
-        className="border border-[#ccc] rounded w-full py-1 px-2"
+        value={toDo}
+        onChange={(e) => {
+          setToDo(e.target.value);
+        }}
+        placeholder="Write your task here..."
+        className="border border-[#ccc] rounded w-full py-1 px-2 placeholder:text-sm placeholder:2xl:text-base"
       />
       <Button name="Add" />
     </form>
