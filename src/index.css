@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+@layer utilities {
+  .active {
+    @apply border-b-[1.5px] border-[#68b984];
+  }
+  .non-active {
+    @apply border-b-[1.5px] border-transparent;
+  }
+}
