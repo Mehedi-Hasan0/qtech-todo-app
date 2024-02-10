@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 
 const todosContext = createContext(undefined);
 
@@ -8,14 +8,24 @@ const TodoContext = ({ children }) => {
     const data = localStorage.getItem("todos") || "[]";
     return JSON.parse(data);
   });
+  const [totalTask, setTotalTask] = useState(todo.length);
+  const [completedTask, setCompletedTask] = useState(filterCompletedTodo(todo));
 
-  const generateId = Math.floor(Math.random() * 10) + 1;
+  // generating random ID
+  const generateId = Math.floor(Math.random() * 100000000) + 1;
+
+  // filter function to filter completed todo
+  function filterCompletedTodo(arr) {
+    const completedTodo = arr?.filter((todo) => todo.completed === true);
+    return completedTodo.length !== 0 ? completedTodo.length : 0;
+  }
 
   const handleAddToDo = (task) => {
+    // saving todo in localstorage
     setTodo((prev) => {
       const newTodos = [
         {
-          id: Math.random().toString(),
+          id: generateId.toString(),
           task,
           completed: false,
           createdAt: new Date(),
@@ -48,9 +58,23 @@ const TodoContext = ({ children }) => {
     });
   };
 
+  useEffect(() => {
+    // saving totalTask & completedTask based on any create/delete of todo
+    setTotalTask(todo.length);
+
+    setCompletedTask(filterCompletedTodo(todo));
+  }, [todo]);
+
   return (
     <todosContext.Provider
-      value={{ todo, handleAddToDo, handleToggleToDo, deleteToDo }}
+      value={{
+        todo,
+        handleAddToDo,
+        handleToggleToDo,
+        deleteToDo,
+        totalTask,
+        completedTask,
+      }}
     >
       {children}
     </todosContext.Provider>

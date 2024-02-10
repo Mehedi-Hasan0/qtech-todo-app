@@ -1,4 +1,8 @@
+import { useToDos } from "../context/TodoContext";
+import Button from "./shared/Button";
+
 const Todo = () => {
+  const { todo, handleToggleToDo, deleteToDo } = useToDos();
   return (
     <div className="flex flex-col max-w-[300px] sm:min-w-[550px] md:min-w-full pt-3">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -16,7 +20,10 @@ const Todo = () => {
                   <th scope="col" className="px-6 py-4">
                     Description
                   </th>
-                  <th scope="col" className="px-6 py-4">
+                  <th
+                    scope="col"
+                    className="px-6 py-4 flex justify-center items-center"
+                  >
                     Complete
                   </th>
                   <th scope="col" className="px-6 py-4">
@@ -28,17 +35,58 @@ const Todo = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr className="border-b dark:border-neutral-500">
-                  <td className="whitespace-nowrap px-6 py-4 font-medium">1</td>
-                  <td className="whitespace-nowrap px-6 py-4">Mark</td>
-                  <td className="whitespace-wrap px-6 py-4 min-w-[200px]">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Porro, vel nemo! Blanditiis, a repellendus voluptatem quia
-                    laudantium quae iusto numquam quibusdam eum nobis. Quas
-                    laudantium mollitia aut modi! Reiciendis, rerum?
-                  </td>
-                  <td className="whitespace-nowrap px-6 py-4">@mdo</td>
-                </tr>
+                {todo &&
+                  todo?.length !== 0 &&
+                  todo?.map((todo, i) => {
+                    return (
+                      <tr key={i} className="border-b dark:border-neutral-500">
+                        <td className="whitespace-nowrap px-6 py-4 font-medium">
+                          {i + 1}
+                        </td>
+                        <td className="whitespace-nowrap px-6 py-4 min-w-[120px]">
+                          {todo?.completed === false ? "Active" : "Completed"}
+                        </td>
+                        <td
+                          className={`whitespace-wrap px-6 py-4 min-w-[200px] ${
+                            todo?.completed === true ? "line-through" : ""
+                          }`}
+                        >
+                          {todo?.task}
+                        </td>
+                        <td className="flex justify-center items-center py-4">
+                          <input
+                            type="checkbox"
+                            checked={todo?.completed}
+                            onChange={() => {
+                              handleToggleToDo(todo?.id);
+                            }}
+                            className=" w-5 h-5 cursor-pointer"
+                          />
+                        </td>
+                        <td>
+                          <div className="flex justify-center">
+                            <Button
+                              name="Edit"
+                              style="px-3 2xl:px-4 bg-[#78de9c] hover:bg-[#68b984] transition duration-200 ease-in"
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            className="flex justify-center"
+                            onClick={() => {
+                              deleteToDo(todo?.id);
+                            }}
+                          >
+                            <Button
+                              name="Delete"
+                              style="px-3 2xl:px-4 bg-red-500"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>

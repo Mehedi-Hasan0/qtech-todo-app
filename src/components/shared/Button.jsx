@@ -1,6 +1,6 @@
-const Button = ({ name }) => {
+const Button = ({ name, style }) => {
   return (
-    <button className="px-6 2xl:px-8 py-1 bg-[#68b984] rounded text-white font-medium">
+    <button className={`py-1 rounded text-white font-medium ${style}`}>
       {name}
     </button>
   );
