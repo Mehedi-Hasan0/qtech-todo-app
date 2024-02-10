@@ -1,10 +1,20 @@
 import { useToDos } from "../context/TodoContext";
 import Button from "./shared/Button";
+import filteredTodoForTable from "../helper/filteredTodoForTable";
+import sortByPriority from "../helper/sortByPriority";
+import { useSearchParams } from "react-router-dom";
 
 const Todo = () => {
   const { todo, handleToggleToDo, deleteToDo } = useToDos();
 
-  // sorting based on
+  const [searchParams] = useSearchParams();
+  const todosParams = searchParams.get("todos");
+
+  // filtering todo based on active and completed
+  const filteredTodoData = filteredTodoForTable(todo, todosParams);
+  // sorting based on priority
+  const sortedTodo = filteredTodoData.sort(sortByPriority);
+
   return (
     <div className="flex flex-col max-w-[300px] sm:min-w-[550px] md:min-w-full pt-3">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -14,7 +24,7 @@ const Todo = () => {
               <thead className="border-b font-medium dark:border-neutral-500">
                 <tr>
                   <th scope="col" className="px-6 py-4">
-                    #
+                    Priority
                   </th>
                   <th scope="col" className="px-6 py-4">
                     Status
@@ -37,13 +47,21 @@ const Todo = () => {
                 </tr>
               </thead>
               <tbody>
-                {todo &&
-                  todo?.length !== 0 &&
-                  todo?.map((todo, i) => {
+                {sortedTodo &&
+                  sortedTodo?.length !== 0 &&
+                  sortedTodo?.map((todo, i) => {
                     return (
                       <tr key={i} className="border-b dark:border-neutral-500">
-                        <td className="whitespace-nowrap px-6 py-4 font-medium">
-                          {i + 1}
+                        <td
+                          className={`whitespace-nowrap px-6 py-4 font-medium ${
+                            todo?.priority === "High"
+                              ? "text-red-400"
+                              : todo?.priority === "Medium"
+                              ? "text-blue-400"
+                              : "text-green-400"
+                          }`}
+                        >
+                          {todo?.priority}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 min-w-[120px]">
                           {todo?.completed === false
