@@ -49,6 +49,21 @@ const TodoContext = ({ children }) => {
     });
   };
 
+  const handleEditToDO = (id, desc, priority) => {
+    setTodo((prev) => {
+      const newTodos = prev.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, task: desc, priority: priority };
+        }
+
+        return todo;
+      });
+
+      localStorage.setItem("todos", JSON.stringify(newTodos));
+      return newTodos;
+    });
+  };
+
   const deleteToDo = (id) => {
     setTodo((prev) => {
       const newToDos = prev.filter((todo) => todo.id !== id);
@@ -70,6 +85,7 @@ const TodoContext = ({ children }) => {
         todo,
         handleAddToDo,
         handleToggleToDo,
+        handleEditToDO,
         deleteToDo,
         totalTask,
         completedTask,
