@@ -1,8 +1,7 @@
-import { useState } from "react";
+import { useToDos } from "../context/TodoContext";
 
 const TodoCounter = () => {
-  const [totalTask, setTotalTask] = useState(0);
-  const [completedTask, setCompletedTask] = useState(0);
+  const { totalTask, completedTask } = useToDos();
   return (
     <div className="flex items-center justify-between sub-container text-sm md:text-base 2xl:text-lg">
       <div className="flex items-center gap-2">

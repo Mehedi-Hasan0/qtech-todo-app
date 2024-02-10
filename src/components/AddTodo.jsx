@@ -4,7 +4,7 @@ import Button from "./shared/Button";
 
 const AddTodo = () => {
   // CONTEXT variables
-  const { handleAddToDo, todo } = useToDos();
+  const { handleAddToDo } = useToDos();
   // STATE
   const [toDo, setToDo] = useState("");
 
@@ -32,7 +32,7 @@ const AddTodo = () => {
         placeholder="Write your task here..."
         className="border border-[#ccc] rounded w-full py-1 px-2 placeholder:text-sm placeholder:2xl:text-base"
       />
-      <Button name="Add" />
+      <Button name="Add" style="px-6 2xl:px-8 bg-[#68b984]" />
     </form>
   );
 };
