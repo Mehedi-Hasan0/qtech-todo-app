@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import filterCompletedTodo from "../helper/filterCompletedTodo";
 
 const todosContext = createContext(undefined);
 
@@ -14,20 +15,18 @@ const TodoContext = ({ children }) => {
   // generating random ID
   const generateId = Math.floor(Math.random() * 100000000) + 1;
 
-  // filter function to filter completed todo
-  function filterCompletedTodo(arr) {
-    const completedTodo = arr?.filter((todo) => todo.completed === true);
-    return completedTodo.length !== 0 ? completedTodo.length : 0;
-  }
-
-  const handleAddToDo = (task) => {
+  const handleAddToDo = (todo) => {
+    const todoPriority =
+      todo?.priority && todo?.priority.length !== 0 ? todo?.priority : "low";
+    const todoTask = todo?.task;
     // saving todo in localstorage
     setTodo((prev) => {
       const newTodos = [
         {
           id: generateId.toString(),
-          task,
+          task: todoTask,
           completed: false,
+          priority: todoPriority,
           createdAt: new Date(),
         },
         ...prev,
