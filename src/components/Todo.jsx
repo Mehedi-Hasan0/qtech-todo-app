@@ -3,6 +3,8 @@ import Button from "./shared/Button";
 
 const Todo = () => {
   const { todo, handleToggleToDo, deleteToDo } = useToDos();
+
+  // sorting based on
   return (
     <div className="flex flex-col max-w-[300px] sm:min-w-[550px] md:min-w-full pt-3">
       <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -44,7 +46,9 @@ const Todo = () => {
                           {i + 1}
                         </td>
                         <td className="whitespace-nowrap px-6 py-4 min-w-[120px]">
-                          {todo?.completed === false ? "Active" : "Completed"}
+                          {todo?.completed === false
+                            ? "Incomplete"
+                            : "Completed"}
                         </td>
                         <td
                           className={`whitespace-wrap px-6 py-4 min-w-[200px] ${
@@ -53,15 +57,17 @@ const Todo = () => {
                         >
                           {todo?.task}
                         </td>
-                        <td className="flex justify-center items-center py-4">
-                          <input
-                            type="checkbox"
-                            checked={todo?.completed}
-                            onChange={() => {
-                              handleToggleToDo(todo?.id);
-                            }}
-                            className=" w-5 h-5 cursor-pointer"
-                          />
+                        <td>
+                          <div className="flex justify-center items-center py-4">
+                            <input
+                              type="checkbox"
+                              checked={todo?.completed}
+                              onChange={() => {
+                                handleToggleToDo(todo?.id);
+                              }}
+                              className=" w-5 h-5 cursor-pointer"
+                            />
+                          </div>
                         </td>
                         <td>
                           <div className="flex justify-center">
